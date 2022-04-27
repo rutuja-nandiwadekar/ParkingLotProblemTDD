@@ -2,10 +2,7 @@ package com.blz;
 
 public class ParkingLot {
     private Vehicle vehicle;
-
-    //default constructor
-    public ParkingLot() {
-    }
+    public static Owner owner = new Owner();
 
     /**
      * @Purpose : To park the vehicle
@@ -14,8 +11,12 @@ public class ParkingLot {
 
     public void vehicleParking(Vehicle vehicle) throws ParkingLotException {
         if (this.vehicle != null)
-            throw new ParkingLotException("Parking Lot is Full");
+            throw new ParkingLotException("Parking lot is full");
         this.vehicle = vehicle;
+        if(this.vehicle != null){
+            String message = "Parking lot is full";
+            owner.update(message);
+        }
     }
     /**
      * @Purpose : To unPark the vehicle
