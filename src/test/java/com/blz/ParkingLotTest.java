@@ -98,7 +98,7 @@ public class ParkingLotTest {
     }
     /**
      * UC3
-     * TC5 = Ability To check parking lot is full by owner
+     * TC6 = Ability To check parking lot is full by owner
      * Given a vehicle when parking lot is full should give message to owner
      */
     @Test
@@ -109,6 +109,23 @@ public class ParkingLotTest {
             Owner owner = new Owner();
             String status = owner.getStatus();
             Assert.assertEquals("Parking lot is full",status);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * UC4
+     * TC7 = Ability to check the security personal is getting correct message when lot is full
+     * Given a vehicle when parking lot is full should give message to security personal
+     */
+    @Test
+    public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToSecurityPersonal() {
+        Vehicle vehicle = new Vehicle();
+        try {
+            parkingLot.vehicleParking(vehicle);
+            SecurityPersonal securityPersonal = new SecurityPersonal();
+            String status = securityPersonal.getStatus();
+            Assert.assertEquals("Parking lot is full", status);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
