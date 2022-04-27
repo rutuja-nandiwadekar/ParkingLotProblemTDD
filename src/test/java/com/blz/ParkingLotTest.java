@@ -130,4 +130,23 @@ public class ParkingLotTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * UC5
+     * TC8 = Ability to check the owner is getting correct message when Parking lot has space
+     * Given a vehicle when parking lot has space again should give message to owner
+     */
+    @Test
+    public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
+        Vehicle vehicle = new Vehicle();
+        try {
+            parkingLot.vehicleParking(vehicle);
+            parkingLot.vehicleUnparking(vehicle);
+            Owner owner = new Owner();
+            String status = owner.getStatus();
+            Assert.assertEquals("Parking lot has space", status);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
 }
