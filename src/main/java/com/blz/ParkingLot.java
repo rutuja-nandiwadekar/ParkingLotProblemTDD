@@ -1,27 +1,35 @@
 package com.blz;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ParkingLot {
-    private Vehicle vehicle;
+    private static final int MAX_LOT_CAPACITY = 2;
+    private Map<Integer,Vehicle> parkingMap;
     private List<ParkingLotObserver> observers;
+    Attendant attendant;
 
     public ParkingLot() {
         this.observers = new ArrayList<>();
+        parkingMap = new LinkedHashMap<>();
+        attendant = new Attendant();
     }
 
     /**
      * @Purpose : To park the vehicle
      * @Param : vehicle
      */
-
-
     public void vehicleParking(Vehicle vehicle) throws ParkingLotException {
-        if (this.vehicle != null)
+        if (this.parkingMap.size() == MAX_LOT_CAPACITY)
             throw new ParkingLotException("Parking lot is full");
-        this.vehicle = vehicle;
-        if(this.vehicle != null){
+        if(this.parkingMap.size()<MAX_LOT_CAPACITY){
+            int key = attendant.parkTheVehicle(parkingMap);
+            this.parkingMap.put(key,vehicle);
+        }
+
+        if(this.parkingMap.size()== MAX_LOT_CAPACITY){
             String message = "Parking lot is full";
             for(ParkingLotObserver observer:observers){
                 observer.update(message);
@@ -33,10 +41,14 @@ public class ParkingLot {
      * @Param : vehicle
      */
     public void vehicleUnparking(Vehicle vehicle) throws ParkingLotException {
-        if (this.vehicle == null)
+        int key=0;
+        if (this.parkingMap.isEmpty())
             throw new ParkingLotException("lot is empty");
-        if (this.vehicle .equals(vehicle)){
-            this.vehicle = null;
+        if (this.parkingMap.containsValue(vehicle)){
+            for(Map.Entry map : parkingMap.entrySet()){
+                if(map.getValue()==vehicle) key= (int) map.getKey();
+            }
+            this.parkingMap.remove(key);
             for(ParkingLotObserver observer:observers){
                 observer.update("Parking lot has space");
             }
@@ -50,7 +62,7 @@ public class ParkingLot {
      * @Return : Returns boolean value true or false
      */
     public boolean isParked(Vehicle vehicle) {
-        if (this.vehicle.equals(vehicle))
+        if (this.parkingMap.containsValue(vehicle))
             return true;
         return false;
     }
@@ -60,7 +72,7 @@ public class ParkingLot {
      * @Return : Returns boolean value true or false
      */
     public boolean isUnParked(Vehicle vehicle) {
-        if (this.vehicle == null)
+        if (!this.parkingMap.containsValue(vehicle))
             return true;
         return false;
     }
@@ -68,4 +80,14 @@ public class ParkingLot {
     public void registerObserver(ParkingLotObserver observer) {
         this.observers.add(observer);
     }
+
+    public int getVehicleLotNumber(Vehicle vehicle) {
+        for (Map.Entry map : parkingMap.entrySet()){
+            if(map.getValue()==vehicle) return (int) map.getKey();
+        }
+        return 0;
+    }
 }
+
+
+
