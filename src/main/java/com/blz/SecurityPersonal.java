@@ -1,10 +1,11 @@
 package com.blz;
 
-public class SecurityPersonal {
+public class SecurityPersonal implements ParkingLotObserver {
     private static String status;
 
     //updating message to security personal
     public void update(String message) {
+
         this.status = message;
     }
 
@@ -12,6 +13,7 @@ public class SecurityPersonal {
      * @return updated message
      */
     public String getStatus() {
+
         return this.status;
     }
 }

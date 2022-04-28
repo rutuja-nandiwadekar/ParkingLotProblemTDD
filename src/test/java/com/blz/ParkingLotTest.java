@@ -18,7 +18,7 @@ public class ParkingLotTest {
      */
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
         try {
             parkingLot.vehicleParking(vehicle);
             boolean isParked = parkingLot.isParked(vehicle);
@@ -35,11 +35,11 @@ public class ParkingLotTest {
      */
     @Test
     public void givenVehicle_WhenAlreadyParked_ShouldThrowException() {
-        Vehicle vehicle = new Vehicle();
-
+        Vehicle vehicle = new Vehicle("alto", 1);
+        Vehicle vehicle1 = new Vehicle("alto 80", 2);
         try {
             parkingLot.vehicleParking(vehicle);
-            parkingLot.vehicleParking(new Vehicle());
+            parkingLot.vehicleParking(vehicle1);
             boolean isParked = parkingLot.isParked(vehicle);
         } catch (ParkingLotException e) {
             Assert.assertEquals("Parking lot is full", e.getMessage());
@@ -53,9 +53,10 @@ public class ParkingLotTest {
      */
     @Test
     public void givenVehicle_WhenUnParked_ShouldReturnTrue() {
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
         try {
             parkingLot.vehicleParking(vehicle);
+            parkingLot.vehicleUnparking(vehicle);
             boolean isUnParked = parkingLot.isUnParked(vehicle);
             Assert.assertTrue(isUnParked);
         } catch (ParkingLotException e) {
@@ -70,11 +71,11 @@ public class ParkingLotTest {
      */
     @Test
     public void givenUnParkedVehicle_WhenTryToUnPark_ShouldReturnThrowException() {
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
         try {
             parkingLot.vehicleUnparking(vehicle);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Lot is empty", e.getMessage());
+            Assert.assertEquals("lot is empty", e.getMessage());
             e.printStackTrace();
         }
 
@@ -86,8 +87,8 @@ public class ParkingLotTest {
      */
     @Test
     public void givenVehicle_WhenTryToUnParkDifferentVehicle_ShouldThrowException() {
-        Vehicle vehicle = new Vehicle();
-        Vehicle vehicle1 = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
+        Vehicle vehicle1 = new Vehicle("alto 80", 2);
         try {
             parkingLot.vehicleParking(vehicle);
             parkingLot.vehicleUnparking(vehicle1);
@@ -103,10 +104,11 @@ public class ParkingLotTest {
      */
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
         try {
-            parkingLot.vehicleParking(vehicle);
             Owner owner = new Owner();
+            parkingLot.registerObserver(owner);
+            parkingLot.vehicleParking(vehicle);
             String status = owner.getStatus();
             Assert.assertEquals("Parking lot is full",status);
         } catch (ParkingLotException e) {
@@ -120,17 +122,17 @@ public class ParkingLotTest {
      */
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToSecurityPersonal() {
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
         try {
-            parkingLot.vehicleParking(vehicle);
             SecurityPersonal securityPersonal = new SecurityPersonal();
+            parkingLot.registerObserver(securityPersonal);
+            parkingLot.vehicleParking(vehicle);
             String status = securityPersonal.getStatus();
             Assert.assertEquals("Parking lot is full", status);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
     }
-
     /**
      * UC5
      * TC8 = Ability to check the owner is getting correct message when Parking lot has space
@@ -138,11 +140,12 @@ public class ParkingLotTest {
      */
     @Test
     public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
-        Vehicle vehicle = new Vehicle();
+        Vehicle vehicle = new Vehicle("alto", 1);
         try {
+            Owner owner = new Owner();
+            parkingLot.registerObserver(owner);
             parkingLot.vehicleParking(vehicle);
             parkingLot.vehicleUnparking(vehicle);
-            Owner owner = new Owner();
             String status = owner.getStatus();
             Assert.assertEquals("Parking lot has space", status);
         } catch (ParkingLotException e) {

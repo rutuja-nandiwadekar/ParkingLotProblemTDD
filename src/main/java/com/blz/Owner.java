@@ -1,6 +1,6 @@
 package com.blz;
 
-public class Owner {
+public class Owner implements ParkingLotObserver{
     private static String status;
 
     //updating message to owner

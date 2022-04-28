@@ -1,22 +1,31 @@
 package com.blz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingLot {
     private Vehicle vehicle;
-    public static Owner owner = new Owner();
-    public SecurityPersonal securityPersonal = new SecurityPersonal();
+    private List<ParkingLotObserver> observers;
+
+    public ParkingLot() {
+        this.observers = new ArrayList<>();
+    }
 
     /**
      * @Purpose : To park the vehicle
      * @Param : vehicle
      */
+
+
     public void vehicleParking(Vehicle vehicle) throws ParkingLotException {
         if (this.vehicle != null)
             throw new ParkingLotException("Parking lot is full");
         this.vehicle = vehicle;
         if(this.vehicle != null){
             String message = "Parking lot is full";
-            owner.update(message);
-            securityPersonal.update(message);
+            for(ParkingLotObserver observer:observers){
+                observer.update(message);
+            }
         }
     }
     /**
@@ -25,10 +34,12 @@ public class ParkingLot {
      */
     public void vehicleUnparking(Vehicle vehicle) throws ParkingLotException {
         if (this.vehicle == null)
-            throw new ParkingLotException("Lot is empty");
+            throw new ParkingLotException("lot is empty");
         if (this.vehicle .equals(vehicle)){
             this.vehicle = null;
-            owner.update("Parking lot has space");
+            for(ParkingLotObserver observer:observers){
+                observer.update("Parking lot has space");
+            }
             return;
         }
         throw new ParkingLotException("Please ask correct vehicle");
@@ -49,9 +60,12 @@ public class ParkingLot {
      * @Return : Returns boolean value true or false
      */
     public boolean isUnParked(Vehicle vehicle) {
-        if (this.vehicle.equals(vehicle))
+        if (this.vehicle == null)
             return true;
         return false;
     }
-}
 
+    public void registerObserver(ParkingLotObserver observer) {
+        this.observers.add(observer);
+    }
+}
