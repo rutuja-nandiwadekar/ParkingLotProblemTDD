@@ -83,9 +83,14 @@ public class ParkingLot {
 
     public int getVehicleLotNumber(Vehicle vehicle) {
         for (Map.Entry map : parkingMap.entrySet()){
-            if(map.getValue()==vehicle) return (int) map.getKey();
+            if(map.getValue()==vehicle)
+                return (int) map.getKey();
         }
         return 0;
+    }
+
+    public int getVehicleLocation(Vehicle vehicle) {
+        return getVehicleLotNumber(vehicle);
     }
 }
 
