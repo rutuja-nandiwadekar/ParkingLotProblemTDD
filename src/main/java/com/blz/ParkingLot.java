@@ -14,7 +14,12 @@ public class ParkingLot {
     private LocalDateTime time;
 
 
-
+    /**
+     * @Purpose : Parking Lot Initialisation
+     * @Param :Vehicle , parking lot capacity
+     * @Function : Array , Hashmap
+     * @Return : NA
+     */
     public ParkingLot() {
         this.observers = new ArrayList<>();
         attendant = new Attendant();
@@ -24,8 +29,10 @@ public class ParkingLot {
     }
 
     /**
-     * @Purpose : To park the vehicle
-     * @Param : vehicle
+     * @Purpose :To park Vehicle as per availability by attendant
+     * @Param : map,exception handling, key value , Date time
+     * @Function :To check for parking status
+     * @Return : Local date & Time
      */
     public void vehicleParking(Vehicle vehicle) throws ParkingLotException {
         if (this.parkingMap.size() == MAX_LOT_CAPACITY && !parkingMap.containsValue(null))
@@ -45,9 +52,10 @@ public class ParkingLot {
     }
 
     /**
-     * @Purpose : Method to check vehicle is park or not
-     * @Param : vehicle
-     * @Return : Returns boolean value true or false
+     * @Purpose :To check for parked vehicle (car)
+     * @Param :boolean
+     * @Function :To park and assign status
+     * @Return :t/f
      */
     public boolean isParked(Vehicle vehicle) {
         if (this.parkingMap.containsValue(vehicle))
@@ -55,24 +63,27 @@ public class ParkingLot {
         return false;
     }
 
+
     /**
-     *
-     * @param time
+     * @Purpose :Set & get parking time for parking charges
+     * @Param :Date and time
+     * @Function :To get time for calculating charges
+     * @Return :
      */
     public void setParkTime(LocalDateTime time) {
         this.time = time;
     }
 
-    /**
-     *
-     * @return
-     */
     public LocalDateTime getParkedTime() {
         return this.time;
     }
+
+
     /**
-     * @Purpose : To unPark the vehicle
-     * @Param : vehicle
+     * @Purpose :To unpark vehicle (car)
+     * @Param :map,observer,array
+     * @Function :To initiate sequence parking
+     * @Return :key value matches
      */
     public void vehicleUnparking(Vehicle vehicle) throws ParkingLotException {
         int key=0;

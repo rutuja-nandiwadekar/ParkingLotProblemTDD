@@ -15,9 +15,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC1
-     * TC1 = Ability To Park vehicle
-     * Given vehicle when parked should return true
+     * @UC1
+     * TC1 = Ability To Park vehicle.
+     * Given vehicle when parked should return true.
      */
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
@@ -33,9 +33,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC1
-     * TC2 = Ability To Park vehicle
-     * given a vehicle when already parked should throw exception
+     * @UC1
+     * TC2 = Ability To Park vehicle.
+     * given a vehicle when already parked should throw exception.
      */
     @Test
     public void givenVehicle_WhenAlreadyParked_ShouldThrowException() {
@@ -54,9 +54,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC2
-     * TC3 = Ability To unPark vehicle
-     * Given a vehicle when unparked should return true
+     * @UC2
+     * TC3 = Ability To unPark vehicle.
+     * Given a vehicle when unparked should return true.
      */
     @Test
     public void givenVehicle_WhenUnParked_ShouldReturnTrue() {
@@ -73,9 +73,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC2
-     * TC4 = Ability To unPark vehicle
-     * given a unparked vehicle when try to unpark should return throw exception
+     * @UC2
+     * TC4 = Ability To unPark vehicle.
+     * given a unparked vehicle when try to unpark should return throw exception.
      */
     @Test
     public void givenUnParkedVehicle_WhenTryToUnPark_ShouldReturnThrowException() {
@@ -90,9 +90,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC2
-     * TC5 = Ability To unPark vehicle
-     * Given a vehicle when try to unpark different vehicle should throw exception
+     * @UC2
+     * TC5 = Ability To unPark vehicle.
+     * Given a vehicle when try to unpark different vehicle should throw exception.
      */
     @Test
     public void givenVehicle_WhenTryToUnParkDifferentVehicle_ShouldThrowException() {
@@ -108,9 +108,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC3
+     * @UC3
      * TC6 = Ability To check parking lot is full by owner
-     * Given a vehicle when parking lot is full should give message to owner
+     * Given a vehicle when parking lot is full should give message to owner.
      */
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
@@ -131,9 +131,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC4
+     * @UC4
      * TC7 = Ability to check the security personal is getting correct message when lot is full
-     * Given a vehicle when parking lot is full should give message to security personal
+     * Given a vehicle when parking lot is full should give message to security personal.
      */
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToSecurityPersonal() {
@@ -154,9 +154,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC5
+     * @UC5
      * TC8 = Ability to check the owner is getting correct message when Parking lot has space
-     * Given a vehicle when parking lot has space again should give message to owner
+     * Given a vehicle when parking lot has space again should give message to owner.
      */
     @Test
     public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
@@ -174,9 +174,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC6
-     * TC9 =
-     * given attendant when owner gives the slot to park the vehicle should park
+     * @UC6
+     * TC9 = Introducing attendant for parking lot to park cars in parking slots by owners choice.
+     *
      */
     @Test
     public void givenAttendant_WhenOwnerGivesTheSlotToParkTheVehicle_ShouldPark() {
@@ -195,9 +195,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC7
-     * TC9 =
-     * given vehicle when find vehicle should return key
+     * @UC7
+     * TC10 = Driver Wants to Find parked car.
+     *
      */
     @Test
     public void givenVehicle_WhenVehicleFind_ShouldReturnKey() {
@@ -214,9 +214,8 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC8
-     * TC9 =
-     * given vehicle when find vehicle should return key
+     * @UC8
+     * TC11 = Parking Lot owner Wants to know time in and time out to charge parking lot users.
      */
     @Test
     public void givenAVehicle_WhenParked_ShouldReturnTimeOfParking() {
@@ -231,9 +230,9 @@ public class ParkingLotTest {
     }
 
     /**
-     * UC8
-     * TC9 =
-     * given vehicle when find vehicle should return key
+     * @UC9
+     * TC12 = Parking lot owner wants parking attendant to direct cars in evenly manner
+     * to ensure Evenly Distributed Parking .
      */
     @Test
     public void givenAVehicle_WhenParked_ShouldParkEvenly() {

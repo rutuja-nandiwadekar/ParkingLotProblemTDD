@@ -19,8 +19,10 @@ public class Owner implements ParkingLotObserver {
     }
 
     /**
-     * @param parkingMap
-     * @return returns key to attendant
+     * @Purpose : Assign unique key for each vehicle
+     * @Param : map (parkingmap)
+     * @Function :To assign unique key for each vehicle
+     * @Return :Key to attendant from map
      */
     public int getLotNumberToPark(Map<Integer, Vehicle> parkingMap) {
         for (Map.Entry map : parkingMap.entrySet()) {
