@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class ParkingLotTest {
     ParkingLot parkingLot = null;
 
@@ -202,6 +204,23 @@ public class ParkingLotTest {
             parkingLot.vehicleParking(vehicle2);
             int key = parkingLot.getVehicleLocation(vehicle2);
             Assert.assertEquals(2, key);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * UC8
+     * TC9 =
+     * given vehicle when find vehicle should return key
+     */
+    @Test
+    public void givenAVehicle_WhenParked_ShouldReturnTimeOfParking() {
+        try {
+            Vehicle vehicle1 = new Vehicle("alto", 1);
+            parkingLot.vehicleParking(vehicle1);
+            LocalDateTime localDateTime = LocalDateTime.now();
+            Assert.assertEquals(localDateTime,parkingLot.getParkedTime());
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }

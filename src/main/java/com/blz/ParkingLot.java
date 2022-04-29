@@ -1,5 +1,6 @@
 package com.blz;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +11,9 @@ public class ParkingLot {
     private Map<Integer,Vehicle> parkingMap;
     private List<ParkingLotObserver> observers;
     Attendant attendant;
+    private LocalDateTime time;
+
+
 
     public ParkingLot() {
         this.observers = new ArrayList<>();
@@ -27,6 +31,7 @@ public class ParkingLot {
         if(this.parkingMap.size()<MAX_LOT_CAPACITY){
             int key = attendant.parkTheVehicle(parkingMap);
             this.parkingMap.put(key,vehicle);
+            setParkTime(LocalDateTime.now());
         }
 
         if(this.parkingMap.size()== MAX_LOT_CAPACITY){
@@ -35,6 +40,22 @@ public class ParkingLot {
                 observer.update(message);
             }
         }
+    }
+
+    /**
+     *
+     * @param time
+     */
+    public void setParkTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LocalDateTime getParkedTime() {
+        return this.time;
     }
     /**
      * @Purpose : To unPark the vehicle
@@ -92,6 +113,8 @@ public class ParkingLot {
     public int getVehicleLocation(Vehicle vehicle) {
         return getVehicleLotNumber(vehicle);
     }
+
+
 }
 
 
