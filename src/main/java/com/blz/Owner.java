@@ -2,7 +2,7 @@ package com.blz;
 
 import java.util.Map;
 
-public class Owner implements ParkingLotObserver{
+public class Owner implements ParkingLotObserver {
     private static String status;
     private int key;
 
@@ -19,18 +19,16 @@ public class Owner implements ParkingLotObserver{
     }
 
     /**
-     *
      * @param parkingMap
      * @return returns key to attendant
      */
     public int getLotNumberToPark(Map<Integer, Vehicle> parkingMap) {
-        int lotNumber=1;
-        if(parkingMap.isEmpty()) this.key = lotNumber;
-
-        for(Map.Entry map :parkingMap.entrySet()){
-            lotNumber++;
+        for (Map.Entry map : parkingMap.entrySet()) {
+            if (map.getValue() == null) {
+                this.key = (int) map.getKey();
+                break;
+            }
         }
-        this.key=lotNumber;
         return this.key;
     }
 }
