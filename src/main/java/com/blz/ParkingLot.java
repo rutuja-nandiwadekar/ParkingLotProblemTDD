@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ParkingLot {
-    private static final int MAX_LOT_CAPACITY = 4;
+    private static final int MAX_LOT_CAPACITY = 10;
     private Map<Integer,Vehicle> parkingMap = new LinkedHashMap<>();
     private List<ParkingLotObserver> observers;
     Attendant attendant;
@@ -34,11 +34,11 @@ public class ParkingLot {
      * @Function :To check for parking status
      * @Return : Local date & Time
      */
-    public void vehicleParking(Vehicle vehicle) throws ParkingLotException {
+    public void vehicleParking(Vehicle vehicle, DriverType driverType) throws ParkingLotException {
         if (this.parkingMap.size() == MAX_LOT_CAPACITY && !parkingMap.containsValue(null))
             throw new ParkingLotException("Parking lot is full");
         if(this.parkingMap.containsValue(null)){
-            int key = attendant.parkTheVehicle(parkingMap);
+            int key = attendant.parkTheVehicle(parkingMap,driverType);
             this.parkingMap.put(key,vehicle);
             setParkTime(LocalDateTime.now());
         }
