@@ -9,6 +9,8 @@ import java.util.Map;
 public class ParkingLot {
     private static final int MAX_LOT_CAPACITY = 10;
     private Map<Integer,Vehicle> parkingMap = new LinkedHashMap<>();
+    private Map<Integer,Vehicle> parkingMap1 = new LinkedHashMap<>();
+    private Map<Integer,Vehicle> parkingMap2 = new LinkedHashMap<>();
     private List<ParkingLotObserver> observers;
     Attendant attendant;
     private LocalDateTime time;
@@ -24,7 +26,11 @@ public class ParkingLot {
         this.observers = new ArrayList<>();
         attendant = new Attendant();
         for(int i=1;i<=MAX_LOT_CAPACITY;i++){
-            parkingMap.put(i,null);
+            parkingMap1.put(i,null);
+        }
+
+        for(int i=1;i<=MAX_LOT_CAPACITY;i++){
+            parkingMap2.put(i,null);
         }
     }
 
@@ -34,7 +40,11 @@ public class ParkingLot {
      * @Function :To check for parking status
      * @Return : Local date & Time
      */
-    public void vehicleParking(Vehicle vehicle, DriverType driverType) throws ParkingLotException {
+    public void vehicleParking(Vehicle vehicle, DriverType driverType, CarType carType) throws ParkingLotException {
+        if(carType==CarType.SMALL)
+            parkingMap=parkingMap1;
+        if(carType==CarType.LARGE)
+            parkingMap=parkingMap2;
         if (this.parkingMap.size() == MAX_LOT_CAPACITY && !parkingMap.containsValue(null))
             throw new ParkingLotException("Parking lot is full");
         if(this.parkingMap.containsValue(null)){
@@ -58,6 +68,10 @@ public class ParkingLot {
      * @Return :t/f
      */
     public boolean isParked(Vehicle vehicle) {
+        if(parkingMap1.containsValue(vehicle))
+            parkingMap=parkingMap1;
+        if(parkingMap2.containsValue(vehicle))
+            parkingMap=parkingMap2;
         if (this.parkingMap.containsValue(vehicle))
             return true;
         return false;
@@ -86,6 +100,10 @@ public class ParkingLot {
      * @Return :key value matches
      */
     public void vehicleUnparking(Vehicle vehicle) throws ParkingLotException {
+        if(parkingMap1.containsValue(vehicle))
+            parkingMap=parkingMap1;
+        if(parkingMap2.containsValue(vehicle))
+            parkingMap=parkingMap2;
         int key=0;
         int nullCount=0;
 //        if (this.parkingMap.isEmpty())
@@ -113,6 +131,10 @@ public class ParkingLot {
      * @Return : Returns boolean value true or false
      */
     public boolean isUnParked(Vehicle vehicle) {
+        if(parkingMap1.containsValue(vehicle))
+            parkingMap=parkingMap1;
+        if(parkingMap2.containsValue(vehicle))
+            parkingMap=parkingMap2;
         if (!this.parkingMap.containsValue(vehicle))
             return true;
         return false;
@@ -123,6 +145,10 @@ public class ParkingLot {
     }
 
     public int getVehicleLotNumber(Vehicle vehicle) {
+        if(parkingMap1.containsValue(vehicle))
+            parkingMap=parkingMap1;
+        if(parkingMap2.containsValue(vehicle))
+            parkingMap=parkingMap2;
         for (Map.Entry map : parkingMap.entrySet()){
             if(map.getValue()==vehicle)
                 return (int) map.getKey();
