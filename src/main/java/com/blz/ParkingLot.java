@@ -161,7 +161,7 @@ public class ParkingLot {
     }
 
     /**
-     * Method to find vehicles of same colour
+     * @Purpose : Method to find vehicles of same colour
      * @param color
      * @return returns the vehicle list of same colour
      */
@@ -172,7 +172,7 @@ public class ParkingLot {
                 .collect(Collectors.toList());
     }
     /**
-     * Method to find the lot no of vehicles of same colour
+     * @Purpose : Method to find the lot no of vehicles of same colour
      * @param color
      * @return returns the lotNumber list of  same color
      */
@@ -188,12 +188,40 @@ public class ParkingLot {
     }
 
     /**
-     * method to convert map to list
+     * @Purpose : method to convert map to list
      * @param map
      * @return
      */
     static public List<Vehicle> mapValuesTolist(Map<Integer,Vehicle> map){
+
         return new ArrayList<>(map.values());
+    }
+
+
+    /**
+     * @param modelName, colour
+     * @return list of lot number of cars by using color and modelName
+     */
+    public List<Integer> getVehicleLotNumberByColorAndModelName(String color, String name) {
+        List<Integer> lotList = new ArrayList<>();
+        for (int key = 1; key <= parkingMap1.size(); key++) {
+            if (parkingMap1.get(key) != null)
+                if (parkingMap1.get(key).getColor() == color && parkingMap1.get(key).getName() == name)
+                    lotList.add(key);
+        }
+        return lotList;
+    }
+
+    public List<String> getVehicleNumberPlate(List<Integer> lotNumberList) {
+        List<String> numPlateList = new ArrayList<>();
+        for (int i = 0; i < lotNumberList.size(); i++) {
+            numPlateList.add(parkingMap1.get(lotNumberList.get(i)).getPlateNumber());
+        }
+        return numPlateList;
+    }
+
+    public String getVehicleNumberPlateBylotNumber(int key) {
+        return parkingMap1.get(key).getPlateNumber();
     }
 }
 

@@ -312,4 +312,30 @@ public class ParkingLotTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     *@UC13 TC16 = Police department wants location and plate number of all parked blue toyota cars
+     */
+    @Test
+    public void givenAParkingLot_WhenBlueToyotaFound_ShouldReturnLocationAndPlateNumber() {
+        Vehicle vehicle1 = new Vehicle("alto", 1, "white", "MH-21-W5338");
+        Vehicle vehicle2 = new Vehicle("toyota", 2,"blue", "MH-66-W5347");
+        Vehicle vehicle3 = new Vehicle("etios", 3,"white", "MH-09-W6466");
+        Vehicle vehicle4 = new Vehicle("toyota", 4,"blue", "MH-24-W9900");
+        try {
+            parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);//6
+            parkingLot.vehicleParking(vehicle2, DriverType.NORMAL, CarType.SMALL);//7
+            parkingLot.vehicleParking(vehicle3, DriverType.HANDICAP, CarType.SMALL);//1
+            parkingLot.vehicleParking(vehicle4, DriverType.HANDICAP, CarType.SMALL);//2
+            List<Integer> lotNumberList = parkingLot.getVehicleLotNumberByColorAndModelName("blue", "toyota");
+            Assert.assertEquals(Arrays.asList(2,7),lotNumberList);
+            List<String> vehicleNumberPlate = parkingLot.getVehicleNumberPlate(lotNumberList);
+            Assert.assertEquals(Arrays.asList("MH-24-W9900","MH-66-W5347"),vehicleNumberPlate);
+            int key = parkingLot.getVehicleLocation(vehicle4);
+            String vehicleNumberPlateBylotNumber = parkingLot.getVehicleNumberPlateBylotNumber(key);
+            Assert.assertEquals("MH-24-W9900",vehicleNumberPlateBylotNumber);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
 }

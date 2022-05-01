@@ -4,6 +4,7 @@ public class Vehicle {
    String name;
    Integer id;
    String color;
+   String plateNumber;
 
    public Vehicle(String name, Integer id) {
       this.name = name;
@@ -14,7 +15,21 @@ public class Vehicle {
       this.id = id;
       this.color = color;
    }
+
+   public Vehicle(String name, Integer id, String color, String plateNumber) {
+      this.name = name;
+      this.id = id;
+      this.color = color;
+      this.plateNumber = plateNumber;
+   }
+
    public String getColor() {
-      return color;
+         return color;
+   }
+   public String getPlateNumber() {
+      return plateNumber;
+   }
+   public String getName() {
+      return name;
    }
 }
