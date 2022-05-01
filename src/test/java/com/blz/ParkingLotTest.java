@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ParkingLotTest {
     ParkingLot parkingLot = null;
@@ -104,7 +107,6 @@ public class ParkingLotTest {
 
     /**
      * @UC3 TC6 = Ability To check parking lot is full by owner
-     * Given a vehicle when parking lot is full should give message to owner.
      */
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
@@ -126,7 +128,6 @@ public class ParkingLotTest {
 
     /**
      * @UC4 TC7 = Ability to check the security personal is getting correct message when lot is full
-     * Given a vehicle when parking lot is full should give message to security personal.
      */
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToSecurityPersonal() {
@@ -148,7 +149,6 @@ public class ParkingLotTest {
 
     /**
      * @UC5 TC8 = Ability to check the owner is getting correct message when Parking lot has space
-     * Given a vehicle when parking lot has space again should give message to owner.
      */
     @Test
     public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
@@ -185,7 +185,7 @@ public class ParkingLotTest {
     }
 
     /**
-     * @UC7 TC10 = Driver Wants to Find parked car.
+     * @UC7 TC10 = Driver Wants to Find location of parked car.
      */
     @Test
     public void givenVehicle_WhenVehicleFind_ShouldReturnKey() {
@@ -232,14 +232,18 @@ public class ParkingLotTest {
             parkingLot.vehicleParking(vehicle3, DriverType.NORMAL, CarType.SMALL);//3
             parkingLot.vehicleUnparking(vehicle1);//1--
             parkingLot.vehicleUnparking(vehicle3);//3--
-            parkingLot.vehicleParking(vehicle4, DriverType.NORMAL, CarType.SMALL); // parked at slot 1
-            parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);
+            parkingLot.vehicleParking(vehicle4, DriverType.NORMAL, CarType.SMALL); //1
+            parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);//3
             Assert.assertEquals(3, parkingLot.getVehicleLocation(vehicle1));
+            Assert.assertEquals(1, parkingLot.getVehicleLocation(vehicle4));
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * @UC10 TC13 = Parking lot according to normal and handicap driver type
+     */
     @Test
     public void givenAVehicle_WhenDriverTypeMentioned_ShouldParkAccordingly() {
         Vehicle vehicle1 = new Vehicle("alto", 1);
@@ -261,10 +265,13 @@ public class ParkingLotTest {
         }
     }
 
+    /**
+     * @UC11 TC14 = Parking lot according to large and small cartype
+     */
     @Test
     public void givenTwoParkingMaps_WhenLargeVehicleComes_ShouldParkAtLotHavingLargeSpace() {
         Vehicle vehicle1 = new Vehicle("alto", 1);
-        Vehicle vehicle2 = new Vehicle("brezza", 2);
+        Vehicle vehicle2 = new Vehicle("breeza", 2);
         Vehicle vehicle3 = new Vehicle("etios", 3);
         try {
             parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);//6
@@ -276,6 +283,31 @@ public class ParkingLotTest {
             Assert.assertEquals(6, key1);
             Assert.assertEquals(1, key2);
             Assert.assertEquals(1, key3);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *@UC12 TC15 = Police department wants location of all parked white cars
+     */
+    @Test
+    public void givenAParkingLot_WhenWhiteCarsFound_ShouldInformPoliceDepartment() {
+        Vehicle vehicle1 = new Vehicle("alto", 1, "white");
+        Vehicle vehicle2 = new Vehicle("brezza", 2,"white");
+        Vehicle vehicle3 = new Vehicle("etios", 3,"white");
+        Vehicle vehicle4 = new Vehicle("maruti", 4,"blue");
+        try {
+        List<Vehicle> expectedList = new ArrayList<>(Arrays.asList(vehicle2, vehicle3, vehicle1));
+        List<Integer> expectedLotNumberList = new ArrayList<>(Arrays.asList(1,2,6));
+            parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);//6
+            parkingLot.vehicleParking(vehicle2, DriverType.HANDICAP, CarType.SMALL);//1
+            parkingLot.vehicleParking(vehicle3, DriverType.HANDICAP, CarType.SMALL);//2
+            parkingLot.vehicleParking(vehicle4, DriverType.HANDICAP, CarType.SMALL);//3
+        List<Vehicle> actualList = parkingLot.getVehicleByColor("white");
+        Assert.assertEquals(expectedList,actualList);
+        List<Integer> actualLotNumberList = parkingLot.getVehicleLotNumberByColor("white");
+        Assert.assertEquals(expectedLotNumberList,actualLotNumberList);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }

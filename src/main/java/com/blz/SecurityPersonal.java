@@ -5,7 +5,6 @@ public class SecurityPersonal implements ParkingLotObserver {
 
     //updating message to security personal
     public void update(String message) {
-
         this.status = message;
     }
 
@@ -13,7 +12,6 @@ public class SecurityPersonal implements ParkingLotObserver {
      * @return updated message
      */
     public String getStatus() {
-
         return this.status;
     }
 }

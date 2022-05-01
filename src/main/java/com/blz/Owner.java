@@ -25,29 +25,24 @@ public class Owner implements ParkingLotObserver {
      * @Return :Key to attendant from map
      */
     public int getLotNumberToPark(Map<Integer, Vehicle> parkingMap, DriverType driverType) {
-//        for (Map.Entry map : parkingMap.entrySet()) {
-//            if (map.getValue() == null) {
-//                this.key = (int) map.getKey();
-//                break;
-//            }
-//        }
 
-        if(driverType==DriverType.HANDICAP)
-            for(int key=1;key<=parkingMap.size();key++){
-                if(parkingMap.get(key)==null)
+        if (driverType == DriverType.NORMAL) {
+            int normalKey =6;
+            for ( normalKey = 6; normalKey <= parkingMap.size(); normalKey++) {
+                if (parkingMap.get(normalKey) == null)
+                    return normalKey;
+            }
+        }
+        if (driverType == DriverType.HANDICAP)
+            for (int key = 1; key <= parkingMap.size(); key++) {
+                if (parkingMap.get(key) == null)
                     return key;
             }
-
-        if(driverType==DriverType.NORMAL) {
-            int key = 6;
-            for ( key = 6; key <= parkingMap.size(); key++) {
-                if (parkingMap.get(key)==null)
-                    return key;
-            }
-
-            for ( key = 1; key <= parkingMap.size(); key++) {
-                if (parkingMap.get(key)==null)
-                    return key;
+        if (driverType == DriverType.NORMAL) {
+            int normalKey = 1;
+            for ( normalKey=1; normalKey <= parkingMap.size(); normalKey++) {
+                if (parkingMap.get(normalKey) == null)
+                    return normalKey;
             }
         }
         return this.key;

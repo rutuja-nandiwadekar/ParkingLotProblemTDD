@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ParkingLot {
     private static final int MAX_LOT_CAPACITY = 10;
     private Map<Integer,Vehicle> parkingMap = new LinkedHashMap<>();
-    private Map<Integer,Vehicle> parkingMap1 = new LinkedHashMap<>();
-    private Map<Integer,Vehicle> parkingMap2 = new LinkedHashMap<>();
+    private final Map<Integer,Vehicle> parkingMap1 = new LinkedHashMap<>();
+    private final Map<Integer,Vehicle> parkingMap2 = new LinkedHashMap<>();
     private List<ParkingLotObserver> observers;
     Attendant attendant;
     private LocalDateTime time;
@@ -106,7 +107,6 @@ public class ParkingLot {
             parkingMap=parkingMap2;
         int key=0;
         int nullCount=0;
-//        if (this.parkingMap.isEmpty())
         for(Map.Entry map : parkingMap.entrySet()){
             if(map.getValue()==null) nullCount++;
         }
@@ -126,7 +126,7 @@ public class ParkingLot {
     }
 
     /**
-     * @Purpose :  Method to check vehicle is unpark or not
+     * @Purpose : Method to check vehicle is unpark or not
      * @Param : vehicle
      * @Return : Returns boolean value true or false
      */
@@ -160,7 +160,41 @@ public class ParkingLot {
         return getVehicleLotNumber(vehicle);
     }
 
+    /**
+     * Method to find vehicles of same colour
+     * @param color
+     * @return returns the vehicle list of same colour
+     */
+    public List<Vehicle> getVehicleByColor(String color) {
+        List<Vehicle> carList = mapValuesTolist(parkingMap1);
+        return carList.stream()
+                .filter(car->car!=null && car.getColor().equals(color))
+                .collect(Collectors.toList());
+    }
+    /**
+     * Method to find the lot no of vehicles of same colour
+     * @param color
+     * @return returns the lotNumber list of  same color
+     */
+    public List<Integer> getVehicleLotNumberByColor(String color) {
+        List<Integer> lotList = new ArrayList<>();
+        List<Vehicle> carList = new ArrayList<>();
+        for(int key=1;key<=parkingMap1.size();key++){
+            if(parkingMap1.get(key)!=null)
+                if(parkingMap1.get(key).getColor()==color)
+                    lotList.add(key);
+        }
+        return lotList;
+    }
 
+    /**
+     * method to convert map to list
+     * @param map
+     * @return
+     */
+    static public List<Vehicle> mapValuesTolist(Map<Integer,Vehicle> map){
+        return new ArrayList<>(map.values());
+    }
 }
 
 
