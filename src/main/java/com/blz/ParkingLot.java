@@ -219,9 +219,23 @@ public class ParkingLot {
         }
         return numPlateList;
     }
-
+    /**
+     * @Purpose :To Get Model Name BMW For increased  security
+     * @Param :modelName
+     * @Function :To Get Model Name
+     * @Return :List of BMW model lotnumber
+     */
     public String getVehicleNumberPlateBylotNumber(int key) {
         return parkingMap1.get(key).getPlateNumber();
+    }
+
+    public List<Vehicle> getVehicleFromModelName(String modelName) {
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList = mapValuesTolist(parkingMap1);
+        return vehicleList.stream()
+                .filter(vehicle -> vehicle!=null)
+                .filter(vehicle -> vehicle.getName() == modelName)
+                .collect(Collectors.toList());
     }
 }
 

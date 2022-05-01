@@ -289,53 +289,73 @@ public class ParkingLotTest {
     }
 
     /**
-     *@UC12 TC15 = Police department wants location of all parked white cars
+     * @UC12 TC15 = Police department wants location of all parked white cars
      */
     @Test
     public void givenAParkingLot_WhenWhiteCarsFound_ShouldInformPoliceDepartment() {
         Vehicle vehicle1 = new Vehicle("alto", 1, "white");
-        Vehicle vehicle2 = new Vehicle("brezza", 2,"white");
-        Vehicle vehicle3 = new Vehicle("etios", 3,"white");
-        Vehicle vehicle4 = new Vehicle("maruti", 4,"blue");
+        Vehicle vehicle2 = new Vehicle("brezza", 2, "white");
+        Vehicle vehicle3 = new Vehicle("etios", 3, "white");
+        Vehicle vehicle4 = new Vehicle("maruti", 4, "blue");
         try {
-        List<Vehicle> expectedList = new ArrayList<>(Arrays.asList(vehicle2, vehicle3, vehicle1));
-        List<Integer> expectedLotNumberList = new ArrayList<>(Arrays.asList(1,2,6));
+            List<Vehicle> expectedList = new ArrayList<>(Arrays.asList(vehicle2, vehicle3, vehicle1));
+            List<Integer> expectedLotNumberList = new ArrayList<>(Arrays.asList(1, 2, 6));
             parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);//6
             parkingLot.vehicleParking(vehicle2, DriverType.HANDICAP, CarType.SMALL);//1
             parkingLot.vehicleParking(vehicle3, DriverType.HANDICAP, CarType.SMALL);//2
             parkingLot.vehicleParking(vehicle4, DriverType.HANDICAP, CarType.SMALL);//3
-        List<Vehicle> actualList = parkingLot.getVehicleByColor("white");
-        Assert.assertEquals(expectedList,actualList);
-        List<Integer> actualLotNumberList = parkingLot.getVehicleLotNumberByColor("white");
-        Assert.assertEquals(expectedLotNumberList,actualLotNumberList);
+            List<Vehicle> actualList = parkingLot.getVehicleByColor("white");
+            Assert.assertEquals(expectedList, actualList);
+            List<Integer> actualLotNumberList = parkingLot.getVehicleLotNumberByColor("white");
+            Assert.assertEquals(expectedLotNumberList, actualLotNumberList);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     *@UC13 TC16 = Police department wants location and plate number of all parked blue toyota cars
+     * @UC13 TC16 = Police department wants location and plate number of all parked blue toyota cars
      */
     @Test
     public void givenAParkingLot_WhenBlueToyotaFound_ShouldReturnLocationAndPlateNumber() {
         Vehicle vehicle1 = new Vehicle("alto", 1, "white", "MH-21-W5338");
-        Vehicle vehicle2 = new Vehicle("toyota", 2,"blue", "MH-66-W5347");
-        Vehicle vehicle3 = new Vehicle("etios", 3,"white", "MH-09-W6466");
-        Vehicle vehicle4 = new Vehicle("toyota", 4,"blue", "MH-24-W9900");
+        Vehicle vehicle2 = new Vehicle("toyota", 2, "blue", "MH-66-W5347");
+        Vehicle vehicle3 = new Vehicle("etios", 3, "white", "MH-09-W6466");
+        Vehicle vehicle4 = new Vehicle("toyota", 4, "blue", "MH-24-W9900");
         try {
             parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);//6
             parkingLot.vehicleParking(vehicle2, DriverType.NORMAL, CarType.SMALL);//7
             parkingLot.vehicleParking(vehicle3, DriverType.HANDICAP, CarType.SMALL);//1
             parkingLot.vehicleParking(vehicle4, DriverType.HANDICAP, CarType.SMALL);//2
             List<Integer> lotNumberList = parkingLot.getVehicleLotNumberByColorAndModelName("blue", "toyota");
-            Assert.assertEquals(Arrays.asList(2,7),lotNumberList);
+            Assert.assertEquals(Arrays.asList(2, 7), lotNumberList);
             List<String> vehicleNumberPlate = parkingLot.getVehicleNumberPlate(lotNumberList);
-            Assert.assertEquals(Arrays.asList("MH-24-W9900","MH-66-W5347"),vehicleNumberPlate);
+            Assert.assertEquals(Arrays.asList("MH-24-W9900", "MH-66-W5347"), vehicleNumberPlate);
             int key = parkingLot.getVehicleLocation(vehicle4);
             String vehicleNumberPlateBylotNumber = parkingLot.getVehicleNumberPlateBylotNumber(key);
-            Assert.assertEquals("MH-24-W9900",vehicleNumberPlateBylotNumber);
+            Assert.assertEquals("MH-24-W9900", vehicleNumberPlateBylotNumber);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
+    }
+    /**
+     * @UC14 TC17 = To Get Model Name BMW For increased  security for Police Department
+     */
+    @Test
+    public void givenInParkingLot_WhenFoundBMW_ShouldReturnVehicleDetails() throws ParkingLotException {
+        Vehicle vehicle1 = new Vehicle("BMW", 1, "white", "MH-21-W5338");
+        Vehicle vehicle2 = new Vehicle("toyota", 2, "blue", "MH-66-W5347");
+        Vehicle vehicle3 = new Vehicle("BMW", 3, "white", "MH-09-W6466");
+        Vehicle vehicle4 = new Vehicle("toyota", 4, "blue", "MH-24-W9900");
+
+        parkingLot.vehicleParking(vehicle1, DriverType.NORMAL, CarType.SMALL);
+        parkingLot.vehicleParking(vehicle2, DriverType.NORMAL, CarType.SMALL);
+        parkingLot.vehicleParking(vehicle3, DriverType.HANDICAP, CarType.SMALL);
+        parkingLot.vehicleParking(vehicle4, DriverType.HANDICAP, CarType.SMALL);
+
+        List<Vehicle> vehicleList = Arrays.asList(vehicle3, vehicle1);
+        List<Vehicle> bmwList = parkingLot.getVehicleFromModelName("BMW");
+
+        Assert.assertEquals(vehicleList, bmwList);
     }
 }
